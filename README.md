@@ -1,6 +1,6 @@
 # KorokBot
 
-##What is KorokBot?
+## What is KorokBot?
 
 KorokBot is a Reddit bot that monitors the following subreddits:
 
