@@ -1,3 +1,9 @@
+##############################
+# KorokBot by /u/dj505gaming #
+#     Written in Python3     #
+#          8/13/2017         #
+##############################
+
 import praw
 import os
 import time
