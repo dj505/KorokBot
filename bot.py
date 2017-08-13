@@ -36,9 +36,9 @@ while True:
             from random import randint
             num_replies = sum(1 for line in open('replied.txt'))
             hurt = ["Ouch.", "Unngh.", "Gya!"]
-            reply = "Yahaha! You found me!\n\n---\n\n^^Koroks ^^found: ^^{} ^^| ^^[Info](https://hastebin.com/raw/lejotidule)".format(num_replies - 7)
-            reply2 = "Twee hee!\n\n---\n\n^^Koroks ^^found: ^^{} ^^| ^^[Info](https://hastebin.com/raw/lejotidule)".format(num_replies - 7)
-            reply3 = random.choice(hurt) + "\n\n---\n\n^^Koroks ^^found: ^^{} ^^| ^^[Info](https://hastebin.com/raw/lejotidule)".format(num_replies - 7)
+            reply = "Yahaha! You found me!\n\n---\n\n^^Koroks ^^found: ^^{} ^^| ^^[Info](https://reddit.com/r/korokbot/) ^^| [^^Suggest ^^a ^^feature](https://www.reddit.com/r/KorokBot/comments/6n35g4/feature_suggestion_and_bux_fix_megathread/) ^^| ^^Twee-hee!".format(num_replies + 1)
+            reply2 = "Twee hee!\n\n---\n\n^^Koroks ^^found: ^^{} ^^| ^^[Info](https://reddit.com/r/korokbot/) ^^| [^^Suggest ^^a ^^feature](https://www.reddit.com/r/KorokBot/comments/6n35g4/feature_suggestion_and_bux_fix_megathread/) ^^| ^^Twee-hee!".format(num_replies + 1)
+            reply3 = random.choice(hurt) + "\n\n---\n\n^^Koroks ^^found: ^^{} ^^| ^^[Info](https://reddit.com/r/korokbot/) ^^| [^^Suggest ^^a ^^feature](https://www.reddit.com/r/KorokBot/comments/6n35g4/feature_suggestion_and_bux_fix_megathread/) ^^| ^^Twee-hee!".format(num_replies + 1)
             localtime = time.asctime(time.localtime(time.time()))
             logging.basicConfig(filename='Activity.log',level=logging.INFO)
 
@@ -65,11 +65,11 @@ while True:
                     dont_reply = dont_reply.split("\n")
                     dont_reply = list(filter(None, dont_reply))
 
-            # SEARCH FOR COMMENTS IN ZELDA SUBREDDITS (breath_of_the_wild+zelda+botw+legendofzelda)
-            for comment in reddit.subreddit('breath_of_the_wild+zelda+botw+legendofzelda').comments(limit=3):
+            # SEARCH FOR COMMENTS IN ZELDA SUBREDDITS (breath_of_the_wild+zelda+botw+legendofzelda+gaming+nintendoswitch)
+            for comment in reddit.subreddit('breath_of_the_wild+zelda+botw+legendofzelda+gaming+nintendoswitch').comments(limit=3):
 
                 # LOOKS FOR COMMENTS CONTAINING 'korok'
-                if 'korok' in comment.body and comment.id not in comments_replied and comment.id not in dont_reply and randint(0,100) < 30 and comment.parent().author != reddit.user.me():
+                if 'korok' in comment.body and comment.id not in comments_replied and comment.id not in dont_reply and randint(0,100) < 30 and comment.parent().author != reddit.user.me() and comment.author != reddit.user.me():
                     # PRINT FOUND CONFIRMATION
                     print("Found Korok (ID: {})".format(comment.id))
 
@@ -103,7 +103,7 @@ while True:
                             f.write(comment.id + "\n")
                     logging.info("Didn't reply (below threshold) (ID {})".format(comment.id))
 
-                elif 'korok' in comment.body and 'rock' not in comment.body and comment.id not in comments_replied and comment.id not in dont_reply and comment.parent().author == reddit.user.me():
+                elif 'korok' in comment.body and 'rock' not in comment.body and comment.id not in comments_replied and comment.id not in dont_reply and comment.parent().author == reddit.user.me() and comment.author != reddit.user.me():
                     # PRINT FOUND CONFIRMATION
                     print("Found duplicate reply (ID: {})".format(comment.id))
 
@@ -117,13 +117,13 @@ while True:
                     with open("dont_reply.txt", "w") as f:
                         for comment.id in dont_reply:
                             f.write(comment.id + "\n")
-                    logging.info('Duplicate reply! ID {}'.format(coment.id))
+                    logging.info('Duplicate reply! ID {}'.format(comment.id))
 
                     # SEND CONFIRMATION
                     print('Replied to ID {}'.format(comment.id))
                     print(num_replies)
 
-                elif 'drops' in comment.body and comment.id not in dont_reply and comment.parent().author == reddit.user.me():
+                elif 'drops' in comment.body and comment.id not in dont_reply and comment.parent().author == reddit.user.me() and comment.author != reddit.user.me():
                     # MAKE SURE BOT IS BEING HOT BY ROCK
                     if 'rock' in comment.body:
                         # PRINT FOUND CONFIRMATION
@@ -193,6 +193,9 @@ while True:
             main()
 
     # HANDLE EXCEPTIONS/ERRORS
+    except KeyboardInterrupt:
+        raise
+
     except:
         # DEFINITIONS AND CONFIG
         localtime = time.asctime(time.localtime(time.time()))
@@ -202,6 +205,7 @@ while True:
         print('An error has occured! Restarting...')
         logging.warning(localtime + ": An error has occured! Restarting...")
         pass
+        # pass
 
     # THIS SHOULDN'T HAPPEN
     else:
