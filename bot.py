@@ -66,7 +66,7 @@ while True:
                     dont_reply = list(filter(None, dont_reply))
 
             # SEARCH FOR COMMENTS IN ZELDA SUBREDDITS (breath_of_the_wild+zelda+botw+legendofzelda+gaming+nintendoswitch)
-            for comment in reddit.subreddit('breath_of_the_wild+zelda+botw+legendofzelda+gaming+nintendoswitch').comments(limit=3):
+            for comment in reddit.subreddit('breath_of_the_wild+zelda+botw+legendofzelda+gaming+nintendoswitch+yahaha_irl').comments(limit=3):
 
                 # LOOKS FOR COMMENTS CONTAINING 'korok'
                 if 'korok' in comment.body and comment.id not in comments_replied and comment.id not in dont_reply and randint(0,100) < 30 and comment.parent().author != reddit.user.me() and comment.author != reddit.user.me():
